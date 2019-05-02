@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/opcharo09/Liri-Node-App/issues"
   },
-  "homepage": "https://github.com/opcharo09/Liri-Node-App#readme"
+  "homepage": "https://github.com/opcharo09/Liri-Node-App#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "date-fns": "^1.30.1"
+  }
 }
