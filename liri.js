@@ -4,7 +4,7 @@ const keys = require("./keys.js");
 const inquirer = require("inquirer");
 var Spotify = require('node-spotify-api');
 const spotify = new Spotify(keys.spotify);
-
+// liri commands
     inquirer
     .prompt([
         {
@@ -27,13 +27,11 @@ const spotify = new Spotify(keys.spotify);
         } else music(response.search)
     });
 
-
-
-    const tm = {
-        provider: "ticketmasrter",
-        apiKey: "TICKETMASTER_API_KEY"
-      };
-    var queryUrl = "https://app.ticketmaster.com/discovery/v2/events.json?size=1&keyword=" + search + tmKey;
+// ticketmaster api fuction
+    function tm(search){
+        const tmKey="TICKETMASTER_API_KEY"
+    };
+    var queryUrl = "https://app.ticketmaster.com/discovery/v2/events.json?size=1&keyword=" + search + t;
     axios.get(queryUrl).then(
         function (response){
             
@@ -45,8 +43,8 @@ const spotify = new Spotify(keys.spotify);
             .catch(function (error) {
                 console.log(error);
     });
-console.log(options);
 
+// spotify fuction
     function music(search){
         spotify.search({ type: 'track', query: search, limit: 1 }, function(err, data) {
             if (err) {
@@ -60,7 +58,21 @@ console.log(options);
         
       });
 }
+// ombd movie fuction  
 
-   
-
- 
+function omdb(search){
+    var queryUrl = "http://www.omdbapi.com/?t=" + search + OMBD_API_KEY ;
+    axios.get(queryUrl).then(
+        function (response){
+            // console.log(response)
+            console.log("Title: " + response.data.Title);
+            console.log("Release Year: " + response.data.Year);
+            console.log("IMDB Rating: " + response.data.imdbRating);
+            console.log("Rotten Tomatoes Rating: " + response.data.tomatoRating);
+            console.log("Country: " + response.data.Country);
+            console.log("Language: " + response.data.Language);
+            console.log("Plot: " + response.data.Plot);
+            console.log("Actors: " + response.data.Actors);
+        }
+    )
+}
