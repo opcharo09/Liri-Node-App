@@ -19,6 +19,9 @@
   "homepage": "https://github.com/opcharo09/Liri-Node-App#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "date-fns": "^1.30.1"
+    "date-fns": "^1.30.1",
+    "dotenv": "^8.0.0",
+    "enquirer": "^2.3.0",
+    "node-spotify-api": "^1.1.1"
   }
 }
