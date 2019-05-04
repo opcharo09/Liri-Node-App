@@ -1,7 +1,7 @@
-require("dotenv").config()
+require("dotenv").config();
+const inquirer = require("inquirer");
 const axios = require('axios');
 const keys = require("./keys.js");
-const inquirer = require("inquirer");
 var Spotify = require('node-spotify-api');
 const spotify = new Spotify(keys.spotify);
 // liri commands
@@ -9,7 +9,7 @@ const spotify = new Spotify(keys.spotify);
     .prompt([
         {
             type: "list",
-            message: "Would you like to search for a concert, movie, or event?",
+            message: "search for a music, movie, or event?",
             choices: ["events", "music", "movies"],
             name: "type"
         },
@@ -26,13 +26,27 @@ const spotify = new Spotify(keys.spotify);
             tm(response.search)
         } else music(response.search)
     });
+    
+ // ombd movie fuction  
+    function omdb(search){
+        axios.get("http://www.omdbapi.com/?t=" + search + OMBD_ID ).then(
+            function (response){
+                
+                console.log("Title: " + response.data.Title);
+                console.log("Release Year: " + response.data.Year);
+                console.log("IMDB Rating: " + response.data.imdbRating);
+                console.log("Rotten Tomatoes Rating: " + response.data.tomatoRating);
+                console.log("Country: " + response.data.Country);
+                console.log("Language: " + response.data.Language);
+                console.log("Plot: " + response.data.Plot);
+                console.log("Actors: " + response.data.Actors);
+            }
+        )
+    }
 
 // ticketmaster api fuction
     function tm(search){
-        const tmKey="TICKETMASTER_API_KEY"
-    };
-    var queryUrl = "https://app.ticketmaster.com/discovery/v2/events.json?size=1&keyword=" + search + t;
-    axios.get(queryUrl).then(
+    axios.get("https://app.ticketmaster.com/discovery/v2/events.json?size=1&keyword=" + search + TM_ID).then(
         function (response){
             
             console.log("Event Name: " + response.data._embedded.events[0].name);
@@ -57,22 +71,5 @@ const spotify = new Spotify(keys.spotify);
         console.log("Album: " + data.tracks.items[0].album.name); 
         
       });
-}
-// ombd movie fuction  
-
-function omdb(search){
-    var queryUrl = "http://www.omdbapi.com/?t=" + search + OMBD_API_KEY ;
-    axios.get(queryUrl).then(
-        function (response){
-            // console.log(response)
-            console.log("Title: " + response.data.Title);
-            console.log("Release Year: " + response.data.Year);
-            console.log("IMDB Rating: " + response.data.imdbRating);
-            console.log("Rotten Tomatoes Rating: " + response.data.tomatoRating);
-            console.log("Country: " + response.data.Country);
-            console.log("Language: " + response.data.Language);
-            console.log("Plot: " + response.data.Plot);
-            console.log("Actors: " + response.data.Actors);
-        }
-    )
-}
+    }
+ }
